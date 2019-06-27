@@ -8,5 +8,6 @@ RUN adduser -D app && usermod -aG root app && chown -R app:0 /opt /home/app && c
 USER app
 EXPOSE 9092
 ENV HOME /home/app
+WORKDIR /opt/kafka
 ENTRYPOINT ["/usr/bin/run.sh"]
 CMD ["/opt/kafka/config/server.properties"]
