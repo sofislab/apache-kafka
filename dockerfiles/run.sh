@@ -25,13 +25,14 @@ file=/opt/kafka/config/server.properties
 
 sed -i -e "s/^zookeeper.connect=localhost:2181/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER_PORT/" "$file"
 sed -i -e "s/^#listeners=PLAINTEXT:\/\/:9092/listeners=PLAINTEXT:\/\/0.0.0.0:9092/" "$file"
-sed -i -e "s/^#advertised.listeners=PLAINTEXT:\/\/your.host.name:9092/advertised.listeners=PLAINTEXT:\/\/$HOSTNAME:9092/" "$file"
-sed -i "/broker.id=/c\\broker.id=$ID" "$file"
+sed -i -e "s/^#advertised.listeners=PLAINTEXT:\/\/your.host.name:9092/advertised.listeners=PLAINTEXT:\/\/:9092/" "$file"
+sed -i "/log.dirs=/c\\log.dirs=/opt/kafka-storage" "$file"
+sed -i "/broker.id=/c\\broker.id.generation.enable=true" "$file"
+
 echo "···································································································"
 echo "TODAS LAS VARIABLES FUERON SETEADAS CORRECTAMENTE"
 echo "···································································································"
-echo "MI ID BROKER EN KAFKA ES "$ID
-echo "···································································································"
 echo "INICIANDO........."
-sleep 10s
+sleep 5s
 exec /opt/kafka/bin/kafka-server-start.sh "$@"
+
